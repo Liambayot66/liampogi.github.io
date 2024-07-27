@@ -1,745 +1,373 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Freshmen Scavenger Hunt</title>
-
     <style>
-
         body {
-
             font-family: Arial, sans-serif;
-
             background-color: #e0f7e9;
-
             margin: 0;
-
             padding: 0;
-
             position: relative;
-
             background-image: linear-gradient(rgba(0, 0, 0, 0.174),rgba(0, 0, 0, 0.141)),url(beige-engineering-background-design-ccb689.webp);
-
         }
-
-        
 
         .container {
-
             margin: 50px auto;
-
             padding: 20px;
-
             background-color: #ffffff;
-
             border: 2px solid #006400;
-
             border-radius: 8px;
-
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-
             width: 80%;
-
             max-width: 600px;
-
             text-align: center;
-
             background-image: linear-gradient(rgba(0, 0, 0, 0.174),rgba(0, 0, 0, 0.141)),url(mechanical-engineering-drawings-light-background-cutting-tools-milling-cutter-technical-design-cover-blueprint-seamless-pattern-vector-illustration_101002-1272.avif);
-
         }
-
-
 
         h1 {
-
             font-size: 2.5em;
-
             margin-bottom: 20px;
-
             color: #006400;
-
             background-color: #ccffcc;
-
             padding: 10px;
-
             border-radius: 5px;
-
         }
-
-
 
         h2 {
-
             font-size: 2em;
-
             margin-top: 20px;
-
             color: #004d00;
-
         }
-
-
 
         input[type="text"] {
-
             padding: 10px;
-
             font-size: 1em;
-
             margin-top: 10px;
-
             width: 80%;
-
             max-width: 300px;
-
             border: 2px solid #004d00;
-
             border-radius: 4px;
-
             background-color: #f5fff5;
-
         }
-
-
 
         button {
-
             padding: 10px 20px;
-
             font-size: 1em;
-
             margin-top: 10px;
-
             cursor: pointer;
-
             background-color: #006400;
-
             color: #ffffff;
-
             border: 2px solid #006400;
-
             border-radius: 4px;
-
         }
-
-
 
         button:hover {
-
             background-color: #004d00;
-
             border-color: #004d00;
-
         }
-
-
 
         #feedback {
-
             font-size: 1.2em;
-
             margin-top: 20px;
-
             font-weight: bold;
-
             color: #004d00;
-
         }
-
-
 
         .clue-section {
-
             display: none;
-
             background-color: #ccffcc;
-
             border: 2px solid #006400;
-
             border-radius: 8px;
-
             padding: 20px;
-
             margin-top: 20px;
-
         }
-
-
 
         .clue-section.active {
-
             display: block;
-
         }
-
-
 
         #user-info {
-
             display: none;
-
             margin-top: 20px;
-
         }
-
-
 
         #user-info input[type="text"] {
-
             margin-bottom: 10px;
-
         }
-
-
 
         #name-table {
-
             margin-top: 20px;
-
             width: 100%;
-
             border-collapse: collapse;
-
         }
-
-
 
         #name-table th, #name-table td {
-
             border: 1px solid #006400;
-
             padding: 8px;
-
             text-align: left;
-
         }
-
-
 
         .button-container {
-
             position: fixed;
-
             top: 10px;
-
             left: 10px;
-
             display: flex;
-
             justify-content: flex-start;
-
             z-index: 1000;
-
         }
-
-
 
         .delete-btn {
-
             background-color: #ff4d4d;
-
             color: #ffffff;
-
             border: none;
-
             padding: 5px 10px;
-
             border-radius: 4px;
-
             cursor: pointer;
-
         }
-
-
 
         .delete-btn:hover {
-
             background-color: #cc0000;
-
         }
-
     </style>
-
 </head>
-
 <body>
-
     <div class="container">
-
         <h1>Freshmen Scavenger Hunt</h1>
-
         <h3><p>Solve each clue to find the next location. Good luck!</p></h3>
 
-
-
         <div class="button-container">
-
             <button id="open-table-btn">Participants</button>
-
         </div>
-
-
 
         <div id="clue1" class="clue-section active">
-
             <h2>Clue 1:</h2>
-
             <p>I'm where books are stored, not a library but a place where you often study.</p>
-
             <input type="text" id="answer1" placeholder="Enter your answer here">
-
             <button class="submit-btn" data-clue="1">Submit</button>
-
         </div>
-
-
 
         <div id="clue2" class="clue-section">
-
             <h2>Clue 2:</h2>
-
             <p>Find the place where you can get hot drinks and light snacks. It’s not the cafeteria, but where students often hang out.</p>
-
             <input type="text" id="answer2" placeholder="Enter your answer here">
-
             <button class="submit-btn" data-clue="2">Submit</button>
-
         </div>
-
-
 
         <div id="clue3" class="clue-section">
-
             <h2>Clue 3:</h2>
-
             <p>This place is where your academic journey begins. It’s not the main entrance but where you get your ID.</p>
-
             <input type="text" id="answer3" placeholder="Enter your answer here">
-
             <button class="submit-btn" data-clue="3">Submit</button>
-
         </div>
-
-
 
         <div id="clue4" class="clue-section">
-
             <h2>Clue 4:</h2>
-
             <p>Final clue: Go where you’d go to play sports or exercise. It’s not a field but an indoor area.</p>
-
             <input type="text" id="answer4" placeholder="Enter your answer here">
-
             <button class="submit-btn" data-clue="4">Submit</button>
-
         </div>
-
-
 
         <div id="user-info">
-
             <h2>Congratulations!</h2>
-
             <p>Your score is: <span id="score"></span></p>
-
             <p>Please enter your name and section/year:</p>
-
             <input type="text" id="name" placeholder="Enter your name">
-
             <input type="text" id="section" placeholder="Enter your section/year"><br>
-
             <button id="save-btn">Save</button>
-
         </div>
 
-
-
         <p id="feedback"></p>
-
     </div>
 
-
-
     <script>
-
     document.addEventListener('DOMContentLoaded', () => {
-
         const clues = [
-
             { id: 'clue1', answer: '1', nextClueId: 'clue2' },
-
             { id: 'clue2', answer: '2', nextClueId: 'clue3' },
-
             { id: 'clue3', answer: '3', nextClueId: 'clue4' },
-
             { id: 'clue4', answer: '4', nextClueId: null }
-
         ];
 
-
-
         let currentClueIndex = 0;
-
         let score = 0; // Initialize score
-
         let wrongAttempts = 0; // Initialize wrong attempts
 
-
-
         function checkAnswer(clueIndex, userAnswer) {
-
             return userAnswer.trim().toLowerCase() === clues[clueIndex].answer.toLowerCase();
-
         }
-
-
 
         function showClue(clueId) {
-
             document.querySelectorAll('.clue-section').forEach(section => {
-
                 section.classList.remove('active');
-
             });
-
             document.getElementById(clueId).classList.add('active');
-
         }
-
-
 
         function displayUserInfo() {
-
             document.querySelectorAll('.clue-section').forEach(section => {
-
                 section.classList.remove('active');
-
             });
-
             document.getElementById('user-info').style.display = 'block';
-
             document.getElementById('score').textContent = score;
-
             document.getElementById('feedback').textContent = `Correct answers: ${score}, Wrong attempts: ${wrongAttempts}`;
-
         }
-
-
 
         function showGreeting() {
-
             const name = localStorage.getItem('name');
-
             const section = localStorage.getItem('section');
-
             if (name && section) {
-
                 // Optional: display a greeting message
-
             }
-
         }
-
-
 
         function loadNames() {
-
             const names = JSON.parse(localStorage.getItem('names')) || [];
-
             // Sort names by score in descending order
-
             names.sort((a, b) => b.score - a.score);
-
             const tbody = document.createElement('tbody');
-
             names.forEach((nameObj, index) => {
-
                 const row = document.createElement('tr');
-
                 const nameCell = document.createElement('td');
-
                 nameCell.textContent = nameObj.name;
-
                 const sectionCell = document.createElement('td');
-
                 sectionCell.textContent = nameObj.section;
-
                 const scoreCell = document.createElement('td');
-
                 scoreCell.textContent = nameObj.score;
-
                 const deleteCell = document.createElement('td');
-
                 const deleteButton = document.createElement('button');
-
                 deleteButton.textContent = 'Delete';
-
                 deleteButton.className = 'delete-btn';
-
                 deleteButton.addEventListener('click', () => deleteRow(index));
-
                 deleteCell.appendChild(deleteButton);
-
                 row.appendChild(nameCell);
-
                 row.appendChild(sectionCell);
-
                 row.appendChild(scoreCell);
-
                 row.appendChild(deleteCell);
-
                 tbody.appendChild(row);
-
             });
-
-
 
             const tableHtml = `
-
                 <!DOCTYPE html>
-
                 <html lang="en">
-
                 <head>
-
                     <meta charset="UTF-8">
-
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
                     <title>Completed Users</title>
-
                     <style>
-
                         body {
-
                             font-family: Arial, sans-serif;
-
                             background-color: #e0f7e9; /* Light green background */
-
                             margin: 0;
-
                             padding: 0;
-
                             text-align: center;
-
                         }
-
                         table {
-
                             margin: 20px auto;
-
                             width: 80%;
-
                             max-width: 600px;
-
                             border-collapse: collapse;
-
                             background-color: #ffffff; /* White background */
-
                             border: 2px solid #006400; /* Dark Green border */
-
                             border-radius: 8px;
-
                             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-
                         }
-
                         th, td {
-
                             border: 1px solid #006400;
-
                             padding: 8px;
-
                             text-align: left;
-
                         }
-
                         th {
-
                             background-color: #ccffcc; /* Light green background */
-
                             color: #004d00; /* Darker Green */
-
                         }
-
                         .delete-btn {
-
                             background-color: #ff4d4d; /* Red */
-
                             color: #ffffff; /* White text */
-
                             border: none;
-
                             padding: 5px 10px;
-
                             border-radius: 4px;
-
                             cursor: pointer;
-
                         }
-
                         .delete-btn:hover {
-
                             background-color: #cc0000; /* Darker red */
-
                         }
-
                     </style>
-
                 </head>
-
                 <body>
-
                     <h1>Participants</h1>
-
                     <table id="name-table">
-
                         <thead>
-
                             <tr>
-
                                 <th>Name</th>
-
                                 <th>Section/Year</th>
-
                                 <th>Score</th>
-
                                 <th>Action</th>
-
                             </tr>
-
                         </thead>
-
                         ${tbody.innerHTML}
-
                     </table>
-
                 </body>
-
                 </html>
-
             `;
-
             const newWindow = window.open('', '_blank');
-
             newWindow.document.write(tableHtml);
-
             newWindow.document.close();
-
         }
-
-
 
         function deleteRow(index) {
-
             let names = JSON.parse(localStorage.getItem('names')) || [];
-
             names.splice(index, 1); // Remove the item at index
-
             localStorage.setItem('names', JSON.stringify(names));
-
             // Reload the table
-
             loadNames();
-
         }
 
-
-
         document.querySelectorAll('.submit-btn').forEach(button => {
-
             button.addEventListener('click', () => {
-
                 const clueIndex = button.getAttribute('data-clue') - 1;
-
                 const userAnswer = document.getElementById(`answer${clueIndex + 1}`).value;
 
-
-
                 if (checkAnswer(clueIndex, userAnswer)) {
-
                     score++; // Increment score
-
                     document.getElementById('feedback').textContent = 'Correct answer!';
-
                 } else {
-
                     wrongAttempts++; // Increment wrong attempts
-
                     document.getElementById('feedback').textContent = 'Wrong answer!';
-
                 }
-
-
 
                 if (clues[clueIndex].nextClueId) {
-
                     currentClueIndex++;
-
                     showClue(clues[currentClueIndex].id);
-
                 } else {
-
                     displayUserInfo();
-
                 }
-
             });
-
         });
-
-
 
         document.getElementById('save-btn').addEventListener('click', () => {
-
             const name = document.getElementById('name').value;
-
             const section = document.getElementById('section').value;
-
             if (name && section) {
-
                 localStorage.setItem('name', name);
-
                 localStorage.setItem('section', section);
 
-
-
                 const names = JSON.parse(localStorage.getItem('names')) || [];
-
                 names.push({ name, section, score }); // Include score in storage
-
                 localStorage.setItem('names', JSON.stringify(names));
 
-
-
                 showGreeting();
-
                 document.getElementById('user-info').style.display = 'none';
-
             }
-
         });
-
-
 
         document.getElementById('open-table-btn').addEventListener('click', loadNames);
 
-
-
         showClue(clues[currentClueIndex].id); // Show the first clue on page load
-
         showGreeting(); // Show greeting if user info is already saved
-
     });
-
     </script>
-
 </body>
-
-    </html>
+</html>
