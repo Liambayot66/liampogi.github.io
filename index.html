@@ -249,7 +249,7 @@
             gridContainer.innerHTML = ''; // Clear the photo grid
 
             for (let i = 0; i < 4; i++) {
-                await displayCountdown(5); // Display countdown from 5 seconds
+                await displayCountdown(1); // Display countdown from 5 seconds
                 captureShot();
                 await new Promise(resolve => setTimeout(resolve, 500)); // Short delay after capturing
             }
@@ -271,13 +271,13 @@
             }, 1500); // Adjust duration for how long the message is visible
         }
 
-     // Print functionality for the 2x2 photo grid as PDF
+   // Print functionality for the 2x2 photo grid as PDF
 async function printPhotoGrid() {
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' }); // Change to landscape
 
-    const imgWidth = 90;  // Width of each image in mm
-    const imgHeight = 133; // Height of each image in mm
+    const imgWidth = 133; // Width of each image in mm (adjusted for landscape)
+    const imgHeight = 90; // Height of each image in mm (adjusted for landscape)
     const padding = 11; // Padding between images
 
     // Load the background image
@@ -295,7 +295,7 @@ async function printPhotoGrid() {
         }
 
         // Draw the background image to fit A4 size on top of the images
-        pdf.addImage(img, 'JPEG', 0, 0, 210, 297); // Use A4 dimensions
+        pdf.addImage(img, 'JPEG', 0, 0, 297, 210); // Use landscape dimensions
 
         // Create Blob and open in a new tab
         const pdfOutput = pdf.output('bloburl');
@@ -304,7 +304,6 @@ async function printPhotoGrid() {
 
     img.src = backgroundImgUrl; // Set the source of the image to start loading
 }
-
 
 
         // Fullscreen toggle functionality
