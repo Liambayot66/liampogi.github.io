@@ -1,4 +1,4 @@
-yo<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -249,7 +249,7 @@ yo<!DOCTYPE html>
             gridContainer.innerHTML = ''; // Clear the photo grid
 
             for (let i = 0; i < 4; i++) {
-                await displayCountdown(5); // Display countdown from 5 seconds
+                await displayCountdown(1); // Display countdown from 5 seconds
                 captureShot();
                 await new Promise(resolve => setTimeout(resolve, 500)); // Short delay after capturing
             }
@@ -276,9 +276,9 @@ async function printPhotoGrid() {
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' }); // Change to landscape
 
-    const imgWidth = 133; // Width of each image in mm (adjusted for landscape)
-    const imgHeight = 92; // Height of each image in mm (adjusted for landscape)
-    const padding = 11; // Padding between images
+    const imgWidth = 134; // Width of each image in mm (adjusted for landscape)
+    const imgHeight = 96; // Height of each image in mm (adjusted for landscape)
+    const padding = 7; // Padding between images
 
     // Load the background image
     const backgroundImgUrl = gridContainer.style.backgroundImage.slice(5, -2); // Get current background image URL
