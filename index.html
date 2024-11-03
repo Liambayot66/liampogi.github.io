@@ -249,7 +249,7 @@
             gridContainer.innerHTML = ''; // Clear the photo grid
 
             for (let i = 0; i < 4; i++) {
-                await displayCountdown(1); // Display countdown from 5 seconds
+                await displayCountdown(5); // Display countdown from 5 seconds
                 captureShot();
                 await new Promise(resolve => setTimeout(resolve, 500)); // Short delay after capturing
             }
