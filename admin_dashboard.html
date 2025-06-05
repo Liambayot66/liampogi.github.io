@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      margin: 0; padding: 0;
+      background-color: #121212;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background-color: #1e1e1e;
+      padding: 30px 40px;
+      border-radius: 16px;
+      width: 800px;
+      text-align: center;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.04);
+    }
+    input, select, button {
+      margin: 8px;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+    }
+    input, select {
+      background-color: #2b2b2b;
+      color: white;
+    }
+    button {
+      background-color: #0095f6;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #007dd1;
+    }
+    .success {
+      margin-top: 15px;
+      color: #32cd32;
+    }
+    .logout {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #ccc;
+      cursor: pointer;
+    }
+    .logout:hover {
+      color: #ff4d4d;
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Admin Dashboard</h2>
+    <form id="userForm">
+      <input type="text" id="username" placeholder="New Username" required />
+      <input type="password" id="password" placeholder="New Password" required />
+      <select id="role" required>
+        <option value="">Select Role</option>
+        <option value="admin">Admin</option>
+        <option value="employee">Employee</option>
+        <option value="residence">Residence</option>
+      </select>
+      <button type="submit">Add Account</button>
+    </form>
+    <div class="success" id="messageBox"></div>
+    <div class="logout" onclick="logout()">Log Out</div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      databaseURL: "https://caps201-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    document.getElementById("userForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const role = document.getElementById("role").value;
+
+      if (!username || !password || !role) {
+        document.getElementById("messageBox").innerText = "❌ All fields are required.";
+        return;
+      }
+
+      const userData = { username, password, role };
+
+      database.ref("users").push(userData)
+        .then(() => {
+          document.getElementById("messageBox").innerText = "✅ Account created successfully!";
+          document.getElementById("userForm").reset();
+        })
+        .catch(error => {
+          document.getElementById("messageBox").innerText = "❌ Error: " + error.message;
+        });
+    });
+
+    function logout() {
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
