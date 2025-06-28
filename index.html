@@ -1,4 +1,4 @@
-!0<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -14,7 +14,6 @@
       font-family: 'Segoe UI', sans-serif;
     }
 
-    /* Background video styling */
     #bg-video {
       position: fixed;
       top: 0;
@@ -84,9 +83,36 @@
         margin-top: 2rem;
       }
     }
+
+    /* 🎥 Background selector button */
+    .video-btn {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: white;
+      font-size: 20px;
+      padding: 6px 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .video-btn:hover {
+      background: rgba(0,0,0,0.8);
+    }
+
+    #videoInput {
+      display: none;
+    }
   </style>
 </head>
 <body>
+
+  <!-- 🎥 Background video upload button -->
+  <button class="video-btn" onclick="document.getElementById('videoInput').click()">🎞️</button>
+  <input type="file" id="videoInput" accept="video/mp4"/>
 
   <!-- Background Video -->
   <video autoplay muted loop id="bg-video">
@@ -109,6 +135,33 @@
   <script>
     const firebaseURL = "https://log-in-data-ca0c3-default-rtdb.asia-southeast1.firebasedatabase.app/users.json";
 
+    // 🔁 Load saved video from localStorage
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedVideo = localStorage.getItem("customVideo");
+      if (savedVideo) {
+        const video = document.getElementById("bg-video");
+        video.innerHTML = `<source src="${savedVideo}" type="video/mp4">`;
+        video.load();
+      }
+    });
+
+    // 🎥 Change background video
+    document.getElementById("videoInput").addEventListener("change", e => {
+      const file = e.target.files[0];
+      if (file && file.type.includes("video")) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const videoURL = evt.target.result;
+          const video = document.getElementById("bg-video");
+          video.innerHTML = `<source src="${videoURL}" type="video/mp4">`;
+          video.load();
+          localStorage.setItem("customVideo", videoURL); // Save to localStorage
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // 🔐 Login handler
     document.getElementById("loginForm").addEventListener("submit", e => {
       e.preventDefault();
       const username = document.getElementById("username").value.trim();
@@ -137,7 +190,7 @@
           }
           if (!found) errorMsg.innerText = "Invalid username or password.";
         })
-        .catch(err => {
+        .catch(() => {
           errorMsg.innerText = "Connection error.";
         });
     });
