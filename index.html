@@ -84,10 +84,10 @@
       }
     }
 
-    /* 🎥 Background selector button */
+    /* 🎥 Upload and ♻️ Reset buttons */
     .video-btn {
-      position: absolute;
-      top: 15px;
+      position: fixed;
+      bottom: 15px;
       left: 15px;
       background: rgba(0,0,0,0.5);
       border: none;
@@ -99,7 +99,21 @@
       z-index: 2;
     }
 
-    .video-btn:hover {
+    .reset-btn {
+      position: fixed;
+      bottom: 15px;
+      left: 65px;
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: white;
+      font-size: 20px;
+      padding: 6px 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .video-btn:hover, .reset-btn:hover {
       background: rgba(0,0,0,0.8);
     }
 
@@ -110,9 +124,12 @@
 </head>
 <body>
 
-  <!-- 🎥 Background video upload button -->
+  <!-- 🎞️ Upload Video Button -->
   <button class="video-btn" onclick="document.getElementById('videoInput').click()">🎞️</button>
   <input type="file" id="videoInput" accept="video/mp4"/>
+
+  <!-- ♻️ Reset Button -->
+  <button class="reset-btn" onclick="resetVideo()">♻️</button>
 
   <!-- Background Video -->
   <video autoplay muted loop id="bg-video">
@@ -135,7 +152,7 @@
   <script>
     const firebaseURL = "https://log-in-data-ca0c3-default-rtdb.asia-southeast1.firebasedatabase.app/users.json";
 
-    // 🔁 Load saved video from localStorage
+    // 🔁 Load saved video from localStorage on page load
     window.addEventListener("DOMContentLoaded", () => {
       const savedVideo = localStorage.getItem("customVideo");
       if (savedVideo) {
@@ -145,7 +162,7 @@
       }
     });
 
-    // 🎥 Change background video
+    // 🎥 Handle video upload
     document.getElementById("videoInput").addEventListener("change", e => {
       const file = e.target.files[0];
       if (file && file.type.includes("video")) {
@@ -155,13 +172,19 @@
           const video = document.getElementById("bg-video");
           video.innerHTML = `<source src="${videoURL}" type="video/mp4">`;
           video.load();
-          localStorage.setItem("customVideo", videoURL); // Save to localStorage
+          localStorage.setItem("customVideo", videoURL); // Save uploaded video
         };
         reader.readAsDataURL(file);
       }
     });
 
-    // 🔐 Login handler
+    // ♻️ Reset background video to default
+    function resetVideo() {
+      localStorage.removeItem("customVideo");
+      location.reload();
+    }
+
+    // 🔐 Login logic
     document.getElementById("loginForm").addEventListener("submit", e => {
       e.preventDefault();
       const username = document.getElementById("username").value.trim();
