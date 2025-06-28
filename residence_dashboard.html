@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Residence Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0; padding: 0;
+      background: #0b132b;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      padding: 20px;
+    }
+    .logout-button {
+      align-self: flex-start;
+      margin-bottom: 20px;
+      padding: 14px 28px;
+      font-size: 18px;
+      background: #ff3b3f;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+      transition: 0.3s;
+    }
+    .logout-button:hover {
+      background: #d63031;
+    }
+    h1 {
+      font-size: 28px;
+      text-align: center;
+      color: #4dd0e1;
+      margin-bottom: 40px;
+    }
+    .meter-circle {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #1e3d59 60%, #3282b8 100%);
+      border: 10px solid #00bcd4;
+      box-shadow: 0 0 40px #00bcd4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .label {
+      position: absolute;
+      top: 30px;
+      font-size: 16px;
+      color: #a0cfe6;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .reading {
+      font-size: 60px;
+      font-weight: bold;
+      letter-spacing: 6px;
+      text-shadow: 0 0 5px #4dd0e1;
+    }
+    .unit {
+      font-size: 18px;
+      color: #b0e0e6;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 400px) {
+      .meter-circle {
+        width: 90vw;
+        height: 90vw;
+      }
+      .reading {
+        font-size: 12vw;
+      }
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+</head>
+<body>
+  <button class="logout-button" onclick="logout()">Logout</button>
+  <h1>Welcome, Residence</h1>
+  <div class="meter-circle">
+    <div class="label">Object Count</div>
+    <div class="reading" id="counterDisplay">00000</div>
+    <div class="unit">entries</div>
+  </div>
+
+  <script>
+    const config = {
+      databaseURL: "https://liam-5c1d5-default-rtdb.asia-southeast1.firebasedatabase.app/",
+    };
+    firebase.initializeApp(config);
+    const path = localStorage.getItem("sensorPath") || "/sensors1/default/value";
+
+    firebase.database().ref(path).on("value", snap => {
+      const val = snap.val() || 0;
+      document.getElementById("counterDisplay").innerText = String(val).padStart(5, '0');
+    });
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
